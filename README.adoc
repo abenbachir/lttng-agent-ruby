@@ -1,0 +1,68 @@
+= lttng-agent-ruby
+Chris Riddoch <riddochc@gmail.com>
+:language: ruby
+
+Version 0.0.1, 2016-01-24
+
+== Description
+
+A simple API for sending tracepoints from Ruby programs to LTTng.
+
+== Requirements
+
+Ruby 2.0 or newer
+
+== Installation
+
+You need to have the +lttng-ust+ library and headers installed on your system to build this.
+
+== Use
+
+As with any other system using lttng:
+
+  $ lttng create
+  $ lttng enable-event --userspace 'lttng_ust_tracef:*'
+  $ lttng start
+  $ my-ruby-program.rb
+  $ lttng stop
+  $ lttng view
+  $ lttng destroy
+
+Note that logs aren't deleted when you run +lttng destroy+, only the lttng session.
+
+=== Simplest possible use:
+
+  LTTng.tracef("This string should be logged in lttng.")
+
+=== Conforming to Ruby's built-in Logger class API:
+
+  require 'lttng-agent-ruby/logger'  # after requiring lttng-agent-ruby
+  logger = Logger.new
+  logger.info("Something informative")
+
+=== With the built-in TracePoint class:
+
+  require 'tracer'
+  tracer = TracePoint.new() {|tp| LTTng.tracef(tp.inspect) }
+  tracer.enable
+
+== Contributing
+
+Pull requests welcome.
+
+== Contributors
+
+* Chris Riddoch
+
+== History
+
+=== Version 0.0.1
+
+* Initial release, yay!
+
+== License
+
+Copyright © 2016 Chris Riddoch
+
+See LICENSE for license details
+
