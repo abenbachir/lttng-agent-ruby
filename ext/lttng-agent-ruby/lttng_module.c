@@ -10,6 +10,6 @@ VALUE lttng_module;
 
 void Init_lttng_module() {
   lttng_module = rb_define_module("LTTng");
-  rb_define_singleton_method(lttng_module, "tracef", t_tracef, 1);
+  rb_define_module_function(lttng_module, "tracef", t_tracef, 1);
 }
 
