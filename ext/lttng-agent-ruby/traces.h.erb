@@ -1,0 +1,31 @@
+#undef TRACEPOINT_PROVIDER
+#define TRACEPOINT_PROVIDER ruby_log
+#
+#undef TRACEPOINT_INCLUDE
+#define TRACEPOINT_INCLUDE "./traces.h"
+
+#if !defined(_TRACEPOINT_UST_RUBY_LOG) || defined(TRACEPOINT_HEADER_MULTI_READ)
+#define _TRACEPOINT_UST_RUBY_LOG
+
+#include "ruby.h"
+#include <lttng/tracepoint.h>
+
+<% ["info", "notice", "warning", "err", "crit", "alert", "emerg"].each do |level| %>
+
+TRACEPOINT_EVENT(ruby_log,
+                 <%= level %>,
+                 TP_ARGS(const char*, t_sourcefile,
+                         int, t_sourceline,
+                         char*, t_message),
+                 TP_FIELDS(ctf_string(sourcefile, t_sourcefile)
+                           ctf_integer(int, sourceline, t_sourceline)
+                           ctf_string(message, t_message)))
+TRACEPOINT_LOGLEVEL(ruby_log, <%= level %>, TRACE_<%= level.upcase %>)
+
+<% end %>
+
+#endif /* _TRACEPOINT_UST_RUBY_LOG */
+
+/* This part must be outside ifdef protection */
+#include <lttng/tracepoint-event.h>
+
