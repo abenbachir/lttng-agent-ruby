@@ -4,7 +4,8 @@
 #define TRACEPOINT_DEFINE
 #include "traces.h"
 
-<% ["info", "notice", "warning", "err", "crit", "alert", "emerg"].each do |level| %>
+<% levels = ["info", "notice", "warning", "err", "crit", "alert", "emerg"] %>
+<% levels.each do |level| %>
 
 VALUE ruby_lttng_trace_<%= level %>(VALUE self, VALUE mesg) {
    if (tracepoint_enabled(ruby_log, <%= level %>)) {
@@ -18,12 +19,8 @@ VALUE lttng_module;
 
 void Init_lttng_module() {
   lttng_module = rb_define_module("LTTng");
-  rb_define_singleton_method(lttng_module, "info",    ruby_lttng_trace_info, 1);
-  rb_define_singleton_method(lttng_module, "notice",  ruby_lttng_trace_notice, 1);
-  rb_define_singleton_method(lttng_module, "warning", ruby_lttng_trace_warning, 1);
-  rb_define_singleton_method(lttng_module, "err",     ruby_lttng_trace_err, 1);
-  rb_define_singleton_method(lttng_module, "crit",    ruby_lttng_trace_crit, 1);
-  rb_define_singleton_method(lttng_module, "alert",   ruby_lttng_trace_alert, 1);
-  rb_define_singleton_method(lttng_module, "emerg",   ruby_lttng_trace_emerg, 1);
+  <% levels.each do |level| %>
+      rb_define_singleton_method(lttng_module, "<%= level %>",    ruby_lttng_trace_<%= level %>, 1);
+  <% end %>
 }
 

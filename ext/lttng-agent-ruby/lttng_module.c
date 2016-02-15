@@ -6,6 +6,7 @@
 
 
 
+
 VALUE ruby_lttng_trace_info(VALUE self, VALUE mesg) {
    if (tracepoint_enabled(ruby_log, info)) {
       tracepoint(ruby_log, info, rb_sourcefile(), rb_sourceline(), StringValuePtr(mesg));
@@ -66,12 +67,20 @@ VALUE lttng_module;
 
 void Init_lttng_module() {
   lttng_module = rb_define_module("LTTng");
-  rb_define_singleton_method(lttng_module, "info",    ruby_lttng_trace_info, 1);
-  rb_define_singleton_method(lttng_module, "notice",  ruby_lttng_trace_notice, 1);
-  rb_define_singleton_method(lttng_module, "warning", ruby_lttng_trace_warning, 1);
-  rb_define_singleton_method(lttng_module, "err",     ruby_lttng_trace_err, 1);
-  rb_define_singleton_method(lttng_module, "crit",    ruby_lttng_trace_crit, 1);
-  rb_define_singleton_method(lttng_module, "alert",   ruby_lttng_trace_alert, 1);
-  rb_define_singleton_method(lttng_module, "emerg",   ruby_lttng_trace_emerg, 1);
+  
+      rb_define_singleton_method(lttng_module, "info",    ruby_lttng_trace_info, 1);
+  
+      rb_define_singleton_method(lttng_module, "notice",    ruby_lttng_trace_notice, 1);
+  
+      rb_define_singleton_method(lttng_module, "warning",    ruby_lttng_trace_warning, 1);
+  
+      rb_define_singleton_method(lttng_module, "err",    ruby_lttng_trace_err, 1);
+  
+      rb_define_singleton_method(lttng_module, "crit",    ruby_lttng_trace_crit, 1);
+  
+      rb_define_singleton_method(lttng_module, "alert",    ruby_lttng_trace_alert, 1);
+  
+      rb_define_singleton_method(lttng_module, "emerg",    ruby_lttng_trace_emerg, 1);
+  
 }
 
