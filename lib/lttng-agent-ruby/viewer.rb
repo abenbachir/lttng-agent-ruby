@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 class Trace
   attr_accessor :op, :context, :filename, :line, :method
   def initialize(op, context, filename, line, method)
@@ -28,6 +26,3 @@ class LTTngTraces
   end
 end
 
-LTTngTraces.new.each {|t|
-  puts t.inspect
-}
