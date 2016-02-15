@@ -13,6 +13,20 @@ VALUE ruby_lttng_trace_<%= level %>(VALUE self, VALUE mesg) {
    }
    return(Qnil);
 }
+
+/*  This warrants a little more design before going further... 
+VALUE ruby_lttng_trace_back_<%= level %>(VALUE self, VALUE level, VALUE mesg) {
+  if (tracepoint_etabled(ruby_log, <%= level %>)) {
+    loc = location_ptr(...);
+    int linenum = location_lineno(loc);
+    char* label = StringValuePtr(location_label_m(loc));
+    char* path = StringValuePtr(location_absolute_path_m(loc));
+    tracepoint(ruby_log, <%= level %>_bt, level, linenum, label, path, StringValuePtr(mesg));
+  }
+  return(Qnil);
+}
+*/
+
 <% end %>
 
 VALUE lttng_module;
