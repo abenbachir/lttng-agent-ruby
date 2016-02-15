@@ -1,30 +1,49 @@
+#
+#
 #!/usr/bin/env ruby
+# require_relative "../../ext/lttng-agent-ruby/lttng_module"
 
-require_relative "../../ext/lttng-agent-ruby/lttng_module"
 
+# This attempts to approximate a Logger-style API.
 class LTTngLogger
   attr_accessor :use_inspect
   def initialize
     @use_inspect = false
   end
 
-  def debug(msg = nil, progname = nil, &b)
-    LTTng.notice(form_message(msg, &b))
+  def emergency(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.emerg(fullmsg)
   end
-  def info(msg = nil, progname = nil, &b)
-    LTTng.info(form_message(msg, &b))
+
+  def alert(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.alert(fullmsg)
   end
-  def warn(msg = nil, progname = nil, &b)
-    LTTng.warning(form_message(msg, &b))
+
+  def critical(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.crit(fullmsg)
   end
+
   def error(msg = nil, progname = nil, &b)
-    LTTng.err(form_message(msg, &b))
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.err(fullmsg)
   end
-  def fatal(msg = nil, progname = nil, &b)
-    LTTng.crit(form_message(msg, &b))
+
+  def warning(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.warning(fullmsg)
   end
-  def unknown(msg = nil, progname = nil, &b)
-    LTTng.alert(form_message(msg, &b))
+
+  def notice(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.notice(fullmsg)
+  end
+
+  def info(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.info(fullmsg)
   end
 
   private
@@ -41,7 +60,4 @@ class LTTngLogger
     end
   end
 end
-
-log = LTTngLogger.new
-log.info("Hello, tracelog watchers.")
 

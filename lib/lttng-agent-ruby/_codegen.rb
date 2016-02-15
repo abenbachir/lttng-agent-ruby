@@ -20,6 +20,7 @@ severities.each_pair.with_index {|pair, i|
 
 __END__
   def <%= log %>(msg = nil, progname = nil, &b)
-    LTTng.<%= ltt %>(formatter.call(:<%= log %>, 1, progname, (msg || b.call)))
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.<%= ltt %>(fullmsg)
   end
 
