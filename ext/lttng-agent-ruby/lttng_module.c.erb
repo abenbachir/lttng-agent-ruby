@@ -4,7 +4,7 @@
 #define TRACEPOINT_DEFINE
 #include "traces.h"
 
-<% levels = ["info", "notice", "warning", "err", "crit", "alert", "emerg"] %>
+<% levels = ["debug", "info", "notice", "warning", "err", "crit", "alert", "emerg"] %>
 <% levels.each do |level| %>
 
 VALUE ruby_lttng_trace_<%= level %>(VALUE self, VALUE mesg) {

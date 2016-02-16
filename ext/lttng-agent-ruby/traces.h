@@ -13,6 +13,18 @@
 
 
 TRACEPOINT_EVENT(ruby_log,
+                 debug,
+                 TP_ARGS(const char*, t_sourcefile,
+                         int, t_sourceline,
+                         char*, t_message),
+                 TP_FIELDS(ctf_string(sourcefile, t_sourcefile)
+                           ctf_integer(int, sourceline, t_sourceline)
+                           ctf_string(message, t_message)))
+TRACEPOINT_LOGLEVEL(ruby_log, debug, TRACE_DEBUG)
+
+
+
+TRACEPOINT_EVENT(ruby_log,
                  info,
                  TP_ARGS(const char*, t_sourcefile,
                          int, t_sourceline,

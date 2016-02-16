@@ -10,7 +10,7 @@
 #include "ruby.h"
 #include <lttng/tracepoint.h>
 
-<% ["info", "notice", "warning", "err", "crit", "alert", "emerg"].each do |level| %>
+<% ["debug", "info", "notice", "warning", "err", "crit", "alert", "emerg"].each do |level| %>
 
 TRACEPOINT_EVENT(ruby_log,
                  <%= level %>,

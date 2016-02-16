@@ -74,6 +74,14 @@ class LTTngLogger
     true
   end
 
+  def debug(msg = nil, progname = nil, &b)
+    fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
+    LTTng.debug(fullmsg)
+  end
+  def debug?
+    true
+  end
+
   private
   # ordered in, I hope, likelihood of use?
   def form_message(msg = nil, &blk)
