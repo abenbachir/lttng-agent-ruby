@@ -7,6 +7,13 @@
 # This attempts to approximate a Logger-style API.
 class LTTngLogger
   attr_accessor :use_inspect
+
+  # Note to anyone reading this code unfamiliar with lttng:
+  # In lttng it's not actually up to the logger itself to
+  # decide what the logging threshold should be.
+  # This has no effect, it's just to appease things like rails.
+  attr_accessor :level
+
   def initialize
     @use_inspect = false
   end
