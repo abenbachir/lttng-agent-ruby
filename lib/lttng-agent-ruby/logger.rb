@@ -12,7 +12,7 @@ class LTTngLogger
   # In lttng it's not actually up to the logger itself to
   # decide what the logging threshold should be.
   # This has no effect, it's just to appease things like rails.
-  attr_accessor :level
+  attr_accessor :level, :formatter
 
   def initialize
     @use_inspect = false
