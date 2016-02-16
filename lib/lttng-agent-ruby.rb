@@ -1,4 +1,4 @@
-require "lttng-agent-ruby/lttng_module"
+require "lttng_module"
 
 require_relative "lttng_agent_ruby/logger"
 require_relative "lttng_agent_ruby/viewer"
