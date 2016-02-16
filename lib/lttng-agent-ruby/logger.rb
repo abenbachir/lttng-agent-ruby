@@ -22,35 +22,56 @@ class LTTngLogger
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.emerg(fullmsg)
   end
+  def emergency?
+    true
+  end
 
   def alert(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.alert(fullmsg)
+  end
+  def alert?
+    true
   end
 
   def critical(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.crit(fullmsg)
   end
+  def critical?
+    true
+  end
 
   def error(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.err(fullmsg)
+  end
+  def error?
+    true
   end
 
   def warning(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.warning(fullmsg)
   end
+  def warning?
+    true
+  end
 
   def notice(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.notice(fullmsg)
   end
+  def notice?
+    true
+  end
 
   def info(msg = nil, progname = nil, &b)
     fullmsg = "#{caller[0]}|#{form_message(msg, &b)}"
     LTTng.info(fullmsg)
+  end
+  def info?
+    true
   end
 
   private
