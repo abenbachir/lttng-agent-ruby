@@ -2,8 +2,8 @@
 
 require "rake/extensiontask"
 
-Rake::ExtensionTask.new "lttng_module" do |ext|
-  ext.lib_dir = "lib/lttng-agent-ruby"
+Rake::ExtensionTask.new "lttng-agent-ruby" do |ext|
+  ext.lib_dir = "lib"
 end
 
 require 'yaml'
