@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "lttng-agent-ruby"
-  s.version     = "0.0.1"
+  s.version     = "0.1.3"
   s.licenses    = ["LGPL-3.0"]
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Tracing ruby applications with LTTng."
@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.email       = "riddochc@gmail.com"
   s.date        = "2016-03-09"
   s.files       = ["README.adoc",
+                   "README.html",
                    "Rakefile",
                    "demos/demo.rb",
                    "demos/demo2.rb",
