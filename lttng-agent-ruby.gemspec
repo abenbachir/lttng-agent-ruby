@@ -9,18 +9,13 @@ Gem::Specification.new do |s|
   s.email       = "riddochc@gmail.com"
   s.date        = "2016-03-09"
   s.files       = ["README.adoc",
-                   "README.html",
                    "Rakefile",
                    "demos/demo.rb",
                    "demos/demo2.rb",
                    "demos/demo3.rb",
-                   "ext/lttng-agent-ruby/Makefile",
                    "ext/lttng-agent-ruby/extconf.rb",
                    "ext/lttng-agent-ruby/lttng_module.c",
                    "ext/lttng-agent-ruby/lttng_module.c.erb",
-                   "ext/lttng-agent-ruby/lttng_module.o",
-                   "ext/lttng-agent-ruby/lttng_module.so",
-                   "ext/lttng-agent-ruby/mkmf.log",
                    "ext/lttng-agent-ruby/traces.h",
                    "ext/lttng-agent-ruby/traces.h.erb",
                    "lib/lttng-agent-ruby/_codegen.rb",
