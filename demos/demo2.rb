@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/lttng-agent-ruby'
+require 'lttng-agent-ruby'
 
 t = TracePoint.new {|tp| LTTng.info(tp.inspect) }
 t.enable

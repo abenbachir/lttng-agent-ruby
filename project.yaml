@@ -1,0 +1,9 @@
+---
+name: lttng-agent-ruby
+toplevel_module: LTTng
+dependencies:
+dev_dependencies:
+  rake: ">=10.3"
+  yard: "~> 0.8.7"
+  asciidoctor: "~> 1.5.2"
+

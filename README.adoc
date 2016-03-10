@@ -1,10 +1,13 @@
 = lttng-agent-ruby
 Chris Riddoch <riddochc@gmail.com>
 :language: ruby
-
-Version 0.0.1, 2016-01-24
+:homepage: https://github.com/riddochc/lttng-agent-ruby/
+:revnumber: 0.0.1
+:revdate: 2016-03-09
 
 == Description
+
+Tracing ruby applications with LTTng.
 
 A simple API for sending tracepoints from Ruby programs to LTTng.
 
@@ -18,33 +21,57 @@ You need to have the +lttng-ust+ library and headers installed on your system to
 
 == Use
 
-As with any other system using lttng:
+The documentation for lttng will be useful for understanding how to make good use
+of this gem. http://lttng.org/docs/
+
+
 
   $ lttng create
-  $ lttng enable-event --userspace 'lttng_ust_tracef:*'
+  $ lttng enable-channel channel0 -u
+  $ lttng enable-event 'ruby_log:*' -u -c channel0
   $ lttng start
   $ my-ruby-program.rb
   $ lttng stop
-  $ lttng view
+  $ lttng view | less
   $ lttng destroy
 
 Note that logs aren't deleted when you run +lttng destroy+, only the lttng session.
+The logs are stored by default in +~/lttng-traces+.
 
 === Simplest possible use:
 
-  LTTng.tracef("This string should be logged in lttng.")
+  LTTng.info("This string should be logged in lttng.")
 
 === Conforming to Ruby's built-in Logger class API:
 
-  require 'lttng-agent-ruby/logger'  # after requiring lttng-agent-ruby
-  logger = Logger.new
+  require 'lttng-agent-ruby'
+  require 'lttng-agent-ruby/logger'
+  logger = LTTngLogger.new
   logger.info("Something informative")
+
+Note that the standard 'formatter' attribute is present for compatibility
+with applications that expect it to be present, but has no effect when
+used.
 
 === With the built-in TracePoint class:
 
+  require 'lttng-agent-ruby'
+  require 'lttng-agent-ruby/logger'
   require 'tracer'
-  tracer = TracePoint.new() {|tp| LTTng.tracef(tp.inspect) }
+  tracer = TracePoint.new() {|tp| LTTng.debug(tp.inspect) }
   tracer.enable
+
+Be careful about the span of your program covered by tracing at this level;
+this can use up disk space at alarming rates!
+
+== Parsing libraries
+
+Until I can provide a more comprehensive tool, I've put together a couple
+libraries that can parse the output of the http://www.efficios.com/babeltrace[babeltrace] tool.
+
+Using these parsers requires that you have the 'parslet' gem installed, but as
+it's not a hard requirement for using the core facilities of LTTng, it's not
+a dependency.
 
 == Contributing
 
