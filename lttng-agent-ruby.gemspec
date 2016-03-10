@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "lttng-agent-ruby"
-  s.version     = "0.1.3"
+  s.version     = "0.1.4"
   s.licenses    = ["LGPL-3.0"]
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Tracing ruby applications with LTTng."
