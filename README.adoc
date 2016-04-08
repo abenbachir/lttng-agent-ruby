@@ -2,8 +2,8 @@
 Chris Riddoch <riddochc@gmail.com>
 :language: ruby
 :homepage: https://github.com/riddochc/lttng-agent-ruby/
-:revnumber: 0.1.4
-:revdate: 2016-03-09
+:revnumber: 0.1.5
+:revdate: 2016-04-08
 
 == Description
 

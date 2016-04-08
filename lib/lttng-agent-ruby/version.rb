@@ -1,6 +1,6 @@
 module LTTng
-  VERSION = "0.1.4"
+  VERSION = "0.1.5"
   VERSION_MAJOR = 0
   VERSION_MINOR = 1
-  VERSION_TINY = 4
+  VERSION_TINY = 5
 end

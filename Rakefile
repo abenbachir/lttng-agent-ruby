@@ -2,7 +2,7 @@
 
 require "rake/extensiontask"
 
-Rake::ExtensionTask.new "lttng-agent-ruby" do |ext|
+Rake::ExtensionTask.new "lttng_agent_ruby_ext" do |ext|
   ext.lib_dir = "lib"
 end
 
@@ -20,7 +20,7 @@ end
 
 def filtered_project_files()
   Dir.chdir __dir__ do
-    Find.find(".").reject {|f| !File.file?(f) || f.start_with?("./.git") }.map {|f| f.sub %r{^\./}, '' }
+    Find.find(".").reject {|f| !File.file?(f) || f =~ %r{^\./(.git|tmp)} || f =~ %r{\.so$} }.map {|f| f.sub %r{^\./}, '' }
   end
 end
 
@@ -46,18 +46,6 @@ license = config.fetch('license') { "LGPL-3.0" }
   dev_dependencies[dep] = dev_dependencies.fetch(dep) {|d| "=#{installed_gem_version(d)}" }
 end
 
-task :gen_version do
-  File.open(File.join("lib", project, "version.rb"), 'w') {|f|
-    f.puts "module #{toplevel_module}"
-    major, minor, tiny = *version.split(/\./).map {|p| p.to_i }
-    f.puts '  VERSION = "' + version + '"'
-    f.puts "  VERSION_MAJOR = #{major}"
-    f.puts "  VERSION_MINOR = #{minor}"
-    f.puts "  VERSION_TINY = #{tiny}"
-    f.puts "end"
-  }
-end
-
 gemspec_template = <<GEMSPEC
 Gem::Specification.new do |s|
   s.name        = "<%= project %>"
@@ -71,6 +59,7 @@ Gem::Specification.new do |s|
   s.date        = "<%= Date.today %>"
   s.files       = [<%= all_files.map{|f| '"' + f + '"' }.join(",\n                   ") %>]
   s.homepage    = "<%= adoc.attributes['homepage'] %>"
+  s.extensions  = ["ext/<%= project.gsub(/-/, '_') %>_ext/extconf.rb"]
 
 % dependencies.each_pair do |req, vers|
   s.add_dependency "<%= req %>", "<%= vers %>"
@@ -81,6 +70,20 @@ Gem::Specification.new do |s|
 % end
 end
 GEMSPEC
+
+task default: [:gen_version, :gemspec, :build]
+
+task :gen_version do
+  File.open(File.join("lib", project, "version.rb"), 'w') {|f|
+    f.puts "module #{toplevel_module}"
+    major, minor, tiny = *version.split(/\./).map {|p| p.to_i }
+    f.puts '  VERSION = "' + version + '"'
+    f.puts "  VERSION_MAJOR = #{major}"
+    f.puts "  VERSION_MINOR = #{minor}"
+    f.puts "  VERSION_TINY = #{tiny}"
+    f.puts "end"
+  }
+end
 
 task :gemspec => [:gen_version] do
   files_in_git = IO.popen(["git", "ls-files"], 'r') { |io| io.readlines.map {|l| l.chomp } }
@@ -107,7 +110,16 @@ task :gemspec => [:gen_version] do
   end
 end
 
-task :build => :gemspec do
+task :build => [:gemspec, :compile] do
   system "gem build #{project}.gemspec"
 end
 
+task :install => [:build] do
+  system "gem install ./#{project}-#{version}.gem"
+end
+
+task :clean do
+  rm_f "./#{project}-#{version}.gem"
+  rm_f "./lib/#{project.gsub(/-/, '_')}_ext.so"
+  rm_rf "tmp"
+end

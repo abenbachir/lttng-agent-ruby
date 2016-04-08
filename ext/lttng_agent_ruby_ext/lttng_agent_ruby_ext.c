@@ -185,7 +185,7 @@ VALUE ruby_lttng_trace_back_emerg(VALUE self, VALUE level, VALUE mesg) {
 
 VALUE lttng_module;
 
-void Init_lttng_module() {
+void Init_lttng_agent_ruby_ext() {
   lttng_module = rb_define_module("LTTng");
   
       rb_define_singleton_method(lttng_module, "debug",    ruby_lttng_trace_debug, 1);
